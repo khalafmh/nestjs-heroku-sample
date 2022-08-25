@@ -8,7 +8,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL || 'postgres://nest:nest@localhost:5432/nest_sample',
-      ssl: process.env.NODE_ENV === 'production',
+      ssl:
+        process.env.NODE_ENV === 'production'
+          ? {
+              rejectUnauthorized: false,
+            }
+          : false,
       entities: [],
       synchronize: process.env.NODE_ENV === 'development',
     }),
